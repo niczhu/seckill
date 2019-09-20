@@ -1,0 +1,17 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="seckill-web-application"/>
+
+    <dubbo:registry id="seckill-web-registy" address="zookeeper://127.0.0.1:2181" timeout="5000" session="60000" check="true"/>
+
+    <dubbo:protocol id="dubbo" name="dubbo" threadpool="fixed" threads="200" payload="52428800"/>
+
+    <dubbo:consumer id="seckill-web-consumer" timeout="60000" retries="2" actives="200" loadbalance="roundrobin"/>
+
+    <dubbo:reference id="seckillService" interface="com.seckill.api.SeckillService" />
+
+</beans>

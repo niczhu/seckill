@@ -1,0 +1,26 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+<!--    <dubbo:application  name="seckill-provider"/>-->
+
+<!--    <dubbo:protocol id="dubbo" name="dubbo" threads="200" threadpool="fixed"/>-->
+<!--    <dubbo:registry address="zookeeper://127.0.0.1:2181" timeout="5000" session="60000" check="true" />-->
+<!--    <dubbo:provider timeout="60000" loadbalance="roundrobin" weight="5" retries="2" actives="200" executes="200"/>-->
+
+<!--    &lt;!&ndash;    向外提供服务接口&ndash;&gt;-->
+
+<!--    <bean id="seckillService" class="com.seckill.service.impl.SeckillServiceImpl" />-->
+<!--    <dubbo:service  interface="com.seckill.api.SeckillService" ref="seckillService"/>-->
+
+
+    <dubbo:application name="demo-provider"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:protocol name="dubbo" port="20890"/>
+    <bean id="seckillService" class="com.seckill.service.impl.SeckillServiceImpl"/>
+    <dubbo:service interface="com.seckill.api.SeckillService" ref="seckillService"/>
+
+</beans>

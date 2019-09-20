@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<context:property-placeholder location="classpath*:web-config.properties" />
+
+	<import resource="../dubbo-config/dubbo-provider.xml"/>
+
+	<context:component-scan base-package="com.seckill.web,com.seckill.api,com.seckill.service" />
+
+	<mvc:annotation-driven/>
+
+	<mvc:default-servlet-handler/>
+
+	<!-- velocity -->
+	<bean id="velocityConfigurer"
+		  class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="/WEB-INF/templates/" />
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- viewResovler -->
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+		<property name="suffix" value=".vm" />
+		<property name="layoutUrl" value="layout/default.vm" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="requestContextAttribute" value="rc" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+	</bean>
+
+	<!-- upload file resovler -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1048576000" />
+		<!-- <property name="uploadTempDir" value="${upload.tmpDir}" /> -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<mvc:resources location="/static/" mapping="/static/**"  cache-period="604800" />
+
+<!--	<mvc:annotation-driven>-->
+<!--		<mvc:message-converters register-defaults="true">-->
+<!--			<bean class="com.itech.framework.converter.JsonHttpMessageConverter">-->
+<!--				<property name="supportedMediaTypes">-->
+<!--					<list>-->
+<!--						<value>application/json;charset=UTF-8</value>-->
+<!--					</list>-->
+<!--				</property>-->
+<!--			</bean>-->
+<!--		</mvc:message-converters>-->
+
+<!--		<mvc:argument-resolvers>-->
+<!--			<bean class="com.itech.framework.system.AccountModelParamResolver" />-->
+<!--			<bean class="com.itech.cashier.system.AccountModelParamResolver" />-->
+<!--			<bean class="com.itech.framework.service.QueryParamsArgumentResolver" />-->
+<!--		</mvc:argument-resolvers>-->
+
+<!--		<mvc:async-support default-timeout="35000"></mvc:async-support>-->
+<!--	</mvc:annotation-driven>-->
+
+
+
+<!--	<mvc:interceptors>-->
+<!--		<bean class="com.itech.framework.interceptor.UrlMonitor" />-->
+<!--		<bean class="com.itech.framework.rbac.RbacInterceptor">-->
+<!--		</bean>-->
+<!--	</mvc:interceptors>-->
+
+	<!-- cors -->
+<!--	<mvc:cors>-->
+<!--	 	<mvc:mapping path="/**/**" allowed-origins="*"-->
+<!--			 allowed-methods="POST, GET, OPTIONS, DELETE, PUT"-->
+<!--			 allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, X-Token"-->
+<!--			 allow-credentials="true" />-->
+<!--	</mvc:cors>-->
+
+
+	
+	<!-- 国际化 -->
+<!--	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
+<!--		<property name="cookieName" value="lang"/>-->
+<!--		<property name="cookieMaxAge" value="10000000"/>-->
+<!--		<property name="cookiePath" value="/"/>-->
+<!--	</bean>-->
+<!--	-->
+<!--	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+<!--		<property name="basename" value="classpath:i18n/message" />-->
+<!--		<property name="useCodeAsDefaultMessage" value="true" />-->
+<!--		<property name="defaultEncoding" value="UTF-8" />-->
+<!--	</bean>-->
+
+	<!-- 异常控制 -->
+<!--	<bean class="com.itech.framework.exception.PrjExceptionHandler">-->
+<!--		<property name="order" value="0" />-->
+<!--	</bean>-->
+</beans>
