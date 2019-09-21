@@ -16,20 +16,13 @@
         <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
         <jdk.version>1.8</jdk.version>
         <!--        <itech.framework.version>0.3.1</itech.framework.version>-->
-        <project.version>0.1.1</project.version>
+<!--        <project.version>0.1.1</project.version>-->
 
         <seckill.api.version>0.1</seckill.api.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>3.8.1</version>
-                <scope>test</scope>
-            </dependency>
 
             <!-- spring-config -->
             <dependency>
