@@ -107,8 +107,10 @@
             <artifactId>spring-test</artifactId>
         </dependency>
     </dependencies>
+
     <build>
-<!--        <finalName>seckill-web</finalName>-->
+        <!--打包不带版本号-->
+        <finalName>seckill-web</finalName>
 
 <!--        <resources>-->
 <!--            <resource>-->
