@@ -4,7 +4,6 @@ import com.seckill.api.SeckillService;
 import com.seckill.bean.SeckillBean;
 import org.apache.dubbo.config.annotation.Service;
 
-@Service
 public class SeckillServiceImpl implements SeckillService {
 
     @Override

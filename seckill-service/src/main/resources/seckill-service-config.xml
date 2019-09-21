@@ -15,6 +15,7 @@
 
 
     <context:component-scan base-package="com.seckill.service" />
+    <import resource="classpath:dubbo-provider.xml"/>
 
     <task:annotation-driven />
 

@@ -56,11 +56,6 @@
             <version>2.7.0</version>
         </dependency>
 
-        <!-- file upload -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
 
         <!-- servlet -->
         <dependency>
@@ -113,43 +108,43 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>seckill-web</finalName>
+<!--        <finalName>seckill-web</finalName>-->
 
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>*.properties</exclude>
-                </excludes>
-            </resource>
-        </resources>
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
+<!--                <excludes>-->
+<!--                    <exclude>*.properties</exclude>-->
+<!--                </excludes>-->
+<!--            </resource>-->
+<!--        </resources>-->
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-help-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-help-plugin</artifactId>-->
+<!--                <version>2.2</version>-->
+<!--            </plugin>-->
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <attachClasses>true</attachClasses>
-                    <classesClassifier>${project.version}</classesClassifier>
-                    <webResources>
-                        <resource>
-<!--                            <directory>src/main/config/${environment}</directory>-->
-                            <targetPath>WEB-INF/classes/</targetPath>
-                            <includes>
-                                <include>*.properties</include>
-                                <include>*.xml</include>
-                            </includes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-        </plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-war-plugin</artifactId>-->
+<!--                <version>2.6</version>-->
+<!--                <configuration>-->
+<!--                    <attachClasses>true</attachClasses>-->
+<!--                    <classesClassifier>${project.version}</classesClassifier>-->
+<!--                    <webResources>-->
+<!--                        <resource>-->
+<!--&lt;!&ndash;                            <directory>src/main/config/${environment}</directory>&ndash;&gt;-->
+<!--                            <targetPath>WEB-INF/classes/</targetPath>-->
+<!--                            <includes>-->
+<!--                                <include>*.properties</include>-->
+<!--                                <include>*.xml</include>-->
+<!--                            </includes>-->
+<!--                        </resource>-->
+<!--                    </webResources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
     </build>
 </project>
