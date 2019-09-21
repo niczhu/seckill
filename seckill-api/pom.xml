@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>seckill-api</artifactId>
-  <version>${seckill.api.version}</version>
+  <version>0.1</version>
 
   <name>seckill-api</name>
   <url>http://maven.apache.org</url>
