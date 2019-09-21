@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置整合mybatis-->
+    <!--1 配置数据库相关参数,-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+<!--    <context:property-placeholder location="classpath:redis.properties"/>-->
+
+    <!-- TODO: 使用druid-->
+
+    <!-- alibaba 数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close" init-method="init">
+        <property name="url" value="${db.url}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+        <property name="driverClassName" value="${db.driverClass}" />
+        <property name="initialSize" value="3" />
+        <property name="maxActive" value="20" />
+        <property name="maxWait" value="60000" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="20" />
+        <!-- stat -->
+        <property name="filters" value="wall,stat,log4j" />
+        <property name="connectionProperties"
+                  value="druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000" />
+    </bean>
+
+    <!--druid监控 -->
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+
+    <!-- 3 配置sqlsessionFactory对象 -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注入数据库连接 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置mybatis全局文件即mybatis-confi.xml -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--扫描实体类-使用别名 -->
+        <property name="typeAliasesPackage" value="com.seckill.dal.bean"/>
+        <!--扫描sql 配置文件 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <!-- 4 配置扫描dao接口 动态实现dao接口  注入spring -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入sqlsessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+        <!--给出需要的扫描的dao接口包 -->
+        <property name="basePackage" value="com.seckill.dal.dao"/>
+    </bean>
+
+
+</beans>

@@ -1,8 +1,13 @@
 package com.seckill.api;
 
-import com.seckill.bean.SeckillBean;
+import com.seckill.dal.bean.SeckillBean;
+
+import java.util.List;
+import java.util.Map;
 
 public interface SeckillService {
+
+    public List<SeckillBean> search(Map<String,Object> map);
 
     public SeckillBean queryById();
 

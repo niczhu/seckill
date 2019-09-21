@@ -11,10 +11,10 @@
 	<context:property-placeholder ignore-unresolvable="true"
 								  location="classpath*:web-config.properties" />
 
-
     <import resource="classpath:seckill-service-config.xml"/>
+	<import resource="classpath:dubbo-config/dubbo-consumer.xml"/>
+
 	<context:component-scan base-package="com.seckill.web,com.seckill.api,com.seckill.service" />
-<!--	<context:component-scan base-package="com.seckill.web" />-->
 
 	<mvc:annotation-driven/>
 

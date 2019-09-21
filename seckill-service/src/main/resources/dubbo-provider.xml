@@ -16,11 +16,4 @@
     <bean id="seckillService" class="com.seckill.service.impl.SeckillServiceImpl" />
     <dubbo:service  interface="com.seckill.api.SeckillService" ref="seckillService"/>
 
-
-<!--    <dubbo:application name="demo-provider"/>-->
-<!--    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>-->
-<!--    <dubbo:protocol name="dubbo" port="20890"/>-->
-<!--    <bean id="seckillService" class="com.seckill.web.Controller.TestServiceImpl"/>-->
-<!--    <dubbo:service interface="com.seckill.web.Controller.TestApi" ref="seckillService"/>-->
-
 </beans>

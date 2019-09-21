@@ -1,4 +1,4 @@
-package com.seckill.bean;
+package com.seckill.dal.bean;
 
 import java.io.Serializable;
 import java.util.Date;
