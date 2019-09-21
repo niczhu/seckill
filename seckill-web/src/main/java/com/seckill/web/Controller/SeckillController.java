@@ -15,19 +15,13 @@ import java.util.HashMap;
 @Controller
 public class SeckillController {
 
-//    @Autowired
-//    private SeckillService seckillService;
-
     private Logger logger= Logger.getLogger(SeckillController.class);
-
 
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     @ResponseBody
     public Object test(){
         logger.info("seckill controller test ...");
-        SeckillService seckillService = (SeckillService) ContextLoader.getCurrentWebApplicationContext().getBean("seckillServiceReference");
-        seckillService.search(new HashMap<String,Object>());
 
-        return "test response..";
+        return "test response success ..";
     }
 }
