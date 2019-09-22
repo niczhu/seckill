@@ -40,13 +40,13 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
+<!--      <scope>provided</scope>-->
     </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
+<!--      <scope>test</scope>-->
     </dependency>
   </dependencies>
 
