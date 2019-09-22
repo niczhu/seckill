@@ -8,7 +8,7 @@
     <dubbo:application  name="seckill-provider"/>
 
     <dubbo:protocol id="dubbo" name="dubbo" threads="200" threadpool="fixed"/>
-    <dubbo:registry address="zookeeper://47.102.201.85:2181" timeout="5000" session="60000" check="true" />
+    <dubbo:registry address="zookeeper://172.19.199.108:2181" timeout="5000" session="60000" check="true" />
     <dubbo:provider timeout="60000" loadbalance="roundrobin" weight="5" retries="2" actives="200" executes="200"/>
 
     <!--    向外提供服务接口-->
