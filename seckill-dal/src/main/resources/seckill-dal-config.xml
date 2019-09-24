@@ -2,25 +2,28 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:master-slave="http://shardingsphere.apache.org/schema/shardingsphere/masterslave"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
-
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://shardingsphere.apache.org/schema/shardingsphere/masterslave
+                       http://shardingsphere.apache.org/schema/shardingsphere/masterslave/master-slave.xsd">
     <!--配置整合mybatis-->
     <!--1 配置数据库相关参数,-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
-<!--    <context:property-placeholder location="classpath:redis.properties"/>-->
 
-    <!-- TODO: 使用druid-->
-
-    <!-- alibaba 数据库连接池 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+    <!-- master 数据库连接池 -->
+    <bean id="ds_master" class="com.alibaba.druid.pool.DruidDataSource"
           destroy-method="close" init-method="init">
-        <property name="url" value="${db.url}" />
-        <property name="username" value="${db.username}" />
-        <property name="password" value="${db.password}" />
-        <property name="driverClassName" value="${db.driverClass}" />
+        <property name="driverClassName" value="${sharding.db.master0.driverClass}" />
+        <property name="url" value="${sharding.db.master0.url}" />
+        <property name="username" value="${sharding.db.master0.username}" />
+        <property name="password" value="${sharding.db.master0.password}" />
         <property name="initialSize" value="3" />
         <property name="maxActive" value="20" />
         <property name="maxWait" value="60000" />
@@ -33,12 +36,57 @@
         <property name="testOnBorrow" value="false" />
         <property name="testOnReturn" value="false" />
         <property name="poolPreparedStatements" value="true" />
-        <property name="maxPoolPreparedStatementPerConnectionSize"
-                  value="20" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
         <!-- stat -->
-        <property name="filters" value="wall,stat,log4j" />
-        <property name="connectionProperties"
-                  value="druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000" />
+<!--        <property name="filters" value="wall,stat,log4j" />-->
+<!--        <property name="connectionProperties"-->
+<!--                  value="druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000" />-->
+    </bean>
+
+
+    <!-- slave0 数据库连接池 -->
+    <bean id="ds_slave0" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close" init-method="init">
+        <property name="driverClassName" value="${sharding.db.slave0.driverClass}" />
+        <property name="url" value="${sharding.db.slave0.url}" />
+        <property name="username" value="${sharding.db.slave0.username}" />
+        <property name="password" value="${sharding.db.slave0.password}" />
+        <property name="initialSize" value="3" />
+        <property name="maxActive" value="20" />
+        <property name="maxWait" value="60000" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+    </bean>
+
+    <!-- slave1 数据库连接池 -->
+    <bean id="ds_slave1" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close" init-method="init">
+        <property name="driverClassName" value="${sharding.db.slave1.driverClass}" />
+        <property name="url" value="${sharding.db.slave1.url}" />
+        <property name="username" value="${sharding.db.slave1.username}" />
+        <property name="password" value="${sharding.db.slave1.password}" />
+        <property name="initialSize" value="3" />
+        <property name="maxActive" value="20" />
+        <property name="maxWait" value="60000" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- stat -->
     </bean>
 
     <!--druid监控 -->
@@ -46,23 +94,21 @@
           class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
     </bean>
 
+    <!--sharding-jdbc datasource-->
+    <master-slave:data-source id="masterSlaveDataSource" master-data-source-name="ds_master" slave-data-source-names="ds_slave0" >
+    </master-slave:data-source>
+
     <!-- 3 配置sqlsessionFactory对象 -->
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!--注入数据库连接 -->
-        <property name="dataSource" ref="dataSource"/>
-        <!--配置mybatis全局文件即mybatis-confi.xml -->
+        <property name="dataSource" ref="masterSlaveDataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!--扫描实体类-使用别名 -->
         <property name="typeAliasesPackage" value="com.seckill.dal.bean"/>
-        <!--扫描sql 配置文件 -->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
     <!-- 4 配置扫描dao接口 动态实现dao接口  注入spring -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!--注入sqlsessionFactory -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
-        <!--给出需要的扫描的dao接口包 -->
         <property name="basePackage" value="com.seckill.dal.dao"/>
     </bean>
 

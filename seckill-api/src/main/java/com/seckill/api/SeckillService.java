@@ -9,7 +9,7 @@ public interface SeckillService {
 
     public List<SeckillBean> search(Map<String,Object> map);
 
-    public SeckillBean queryById();
+    public SeckillBean queryById(long seckillId);
 
     public String test();
 

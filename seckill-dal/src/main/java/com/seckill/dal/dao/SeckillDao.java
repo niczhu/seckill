@@ -23,7 +23,13 @@ public interface SeckillDao {
      * @param params
      * @return
      */
-//    @Select("select * from seckill")
     List<SeckillBean> search(Map<String,Object> params);
+
+    /**
+     *  update
+     * @param seckillBean
+     * @return
+     */
+    long updateById(SeckillBean seckillBean);
 
 }
