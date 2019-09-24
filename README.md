@@ -1,2 +1,5 @@
-# seckill
-seckill,dubbo,redis..
+## seckill dev branch
+
+seckill
+dubbo
+sharding-jdbc
