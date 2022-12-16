@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>4.3.18.RELEASE</org.springframework.version>
+        <org.springframework.version>5.2.20.RELEASE</org.springframework.version>
         <jdk.version>1.8</jdk.version>
         <!--        <itech.framework.version>0.3.1</itech.framework.version>-->
 <!--        <project.version>0.1.1</project.version>-->
